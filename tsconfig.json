@@ -18,5 +18,5 @@
     "noFallthroughCasesInSwitch": false,
     "esModuleInterop": true
   },
-  "exclude": ["dist"]
+  "exclude": ["dist", "web", "vite.config.ts"]
 }

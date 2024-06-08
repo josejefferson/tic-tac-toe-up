@@ -25,7 +25,7 @@ export class AuthService implements OnModuleInit {
     user.name = 'Admin'
     user.email = 'user@email.com'
     user.password = 'P@ssw0rd'
-    user.role = RoleEnum.SUPER
+    user.role = RoleEnum.ADMIN
 
     this.logger.warn('No user registered in the system, a user was created')
     this.logger.warn(`E-mail: ${user.email}`)
