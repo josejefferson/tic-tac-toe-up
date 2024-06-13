@@ -11,14 +11,14 @@ import {
   Text,
   useDisclosure
 } from '@chakra-ui/react'
-import { useSocket } from '@josejefferson/socket.io-react-hook'
 import { useEffect, useState } from 'react'
 import { GiClosedDoors, GiMagnifyingGlass } from 'react-icons/gi'
 import { SocketEventStarted } from '../../types/socket'
 import { useSocketEvent } from '../../utils/socket'
+import { useGameSocket } from './socket'
 
 export function MatchModal() {
-  const { socket, connected } = useSocket()
+  const { socket, connected } = useGameSocket()
   const { isOpen, onOpen, onClose } = useDisclosure({ defaultIsOpen: true })
   const [disconnected, setDisconnected] = useState(false)
   useEffect(() => void (!connected && setDisconnected(false)), [connected])

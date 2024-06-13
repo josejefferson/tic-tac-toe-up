@@ -1,11 +1,11 @@
 import { useToast } from '@chakra-ui/react'
-import { useSocket } from '@josejefferson/socket.io-react-hook'
 import { getErrorMessage } from '../../components/error/errors'
 import { useSocketEvent } from '../../utils/socket'
+import { useGameSocket } from './socket'
 
 export function useSocketException() {
   const toast = useToast()
-  const { socket } = useSocket()
+  const { socket } = useGameSocket()
 
   useSocketEvent<any>('exception', (err) => {
     toast({

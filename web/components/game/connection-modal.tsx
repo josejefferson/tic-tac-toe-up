@@ -1,9 +1,9 @@
 import { Heading, Icon, Modal, ModalBody, ModalContent, ModalHeader, ModalOverlay, Text } from '@chakra-ui/react'
-import { useSocket } from '@josejefferson/socket.io-react-hook'
 import { GiServerRack } from 'react-icons/gi'
+import { useGameSocket } from './socket'
 
 export function ConnectionModal() {
-  const { error, connected, socket } = useSocket()
+  const { error, connected, socket } = useGameSocket()
   const realError = socket.active ? null : error
 
   return (

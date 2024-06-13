@@ -1,11 +1,11 @@
-import { useSocket } from '@josejefferson/socket.io-react-hook'
 import { useEffect } from 'react'
+import { useGameSocket } from '../components/game/socket'
 
 export function useSocketEvent<IncomingMessage extends any[] = any[], OutcomingMessage extends any[] = any[]>(
   event: string,
   callback?: (...data: IncomingMessage) => void
 ) {
-  const { socket } = useSocket()
+  const { socket } = useGameSocket()
 
   useEffect(() => {
     if (!callback) return

@@ -2,56 +2,43 @@ import { UseFilters } from '@nestjs/common'
 import {
   ConnectedSocket,
   MessageBody,
+  OnGatewayConnection,
   OnGatewayDisconnect,
-  OnGatewayInit,
   SubscribeMessage,
   WebSocketGateway,
   WebSocketServer
 } from '@nestjs/websockets'
 import { Server, Socket } from 'socket.io'
 import { GameExceptionsFilter } from './game.exception'
-import { GameService } from './game.service'
+import { QuickGameService } from './quick-game.service'
 
-@WebSocketGateway({ namespace: '/room' })
+@WebSocketGateway()
 @UseFilters(new GameExceptionsFilter())
-export class GameGateway implements OnGatewayInit, OnGatewayDisconnect {
+export class QuickGameGateway implements OnGatewayConnection, OnGatewayDisconnect {
   @WebSocketServer() io: Server
 
-  constructor(public service: GameService) {}
+  constructor(public service: QuickGameService) {}
 
-  afterInit(server: Server) {
-    server.use((socket, next) => {
-      try {
-        const id = this.getRoomID(socket)
-        this.service.join(socket, id)
-        next()
-      } catch (err) {
-        next(err)
-      }
-    })
+  handleConnection(socket: Socket) {
+    this.service.join(socket)
   }
 
   handleDisconnect(socket: Socket) {
-    const id = this.getRoomID(socket)
-    this.service.leave(socket, id)
-  }
-
-  getRoomID(socket: Socket) {
-    const id = socket.handshake.query.id
-    if (typeof id !== 'string') {
-      throw new Error('Invalid room ID')
-    }
-    return id
+    this.service.leave(socket)
   }
 
   getMyRoom(socket: Socket) {
-    const id = this.getRoomID(socket)
-    const room = this.service.getRoom(id)
-    const player = room.getPlayer(socket.id)
-    if (!player) {
-      throw new Error('Forbidden action; you are not in this room')
+    const room = this.service.getCurrentRoom(socket.id)
+    if (!room) {
+      throw new Error('Forbidden action; you are not in a room')
     }
+    const player = room.players.find((player) => player.id === socket.id)!
     return { room, player }
+  }
+
+  @SubscribeMessage('join')
+  join(@ConnectedSocket() socket: Socket) {
+    this.service.join(socket)
   }
 
   @SubscribeMessage('place')
@@ -62,14 +49,14 @@ export class GameGateway implements OnGatewayInit, OnGatewayDisconnect {
     }
 
     room.game.place(position)
-    socket.to(room.id).emit('place', position)
+    socket.to(room.id.toString()).emit('place', position)
   }
 
   @SubscribeMessage('restart')
   handleRestart(@ConnectedSocket() socket: Socket) {
     const { room } = this.getMyRoom(socket)
     room.game.restart()
-    this.io.in(room.id).emit('gameInit', room.game)
+    this.io.in(room.id.toString()).emit('gameInit', room.game)
   }
 
   @SubscribeMessage('sync')

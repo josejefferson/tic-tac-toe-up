@@ -8,6 +8,7 @@ export class Game {
   public winnerPattern: number[] = []
 
   static MAX_SYMBOLS = 6
+  static SYMBOLS = ['X', 'O'] as GameSymbol[]
 
   constructor() {
     this.start()
@@ -16,7 +17,7 @@ export class Game {
   private start() {
     this.board = []
     this.order = 0
-    this.turn = (['X', 'O'] as GameSymbol[])[Math.floor(Math.random() * 2)]
+    this.turn = Game.SYMBOLS[Math.floor(Math.random() * 2)]
     this.winner = null
     this.winnerPattern = []
 

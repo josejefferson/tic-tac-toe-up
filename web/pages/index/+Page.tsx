@@ -1,9 +1,11 @@
 import { Avatar, Button, Divider, Flex, Heading, Input, Link, Text, VStack } from '@chakra-ui/react'
+import { CreateRoom } from '../../components/home/create-room'
+import { JoinRoom } from '../../components/home/join-room'
 
 export default function Page() {
   return (
     <>
-      <Flex>
+      <Flex direction={{ base: 'column', md: 'row' }} gap={16}>
         <VStack flex={1} spacing={4}>
           <Heading fontSize="md" fontWeight="bold" color="primary.600">
             INFORMATION
@@ -26,8 +28,6 @@ export default function Page() {
           </Button>
         </VStack>
 
-        <Divider orientation="vertical" h="full" />
-
         <VStack flex={1} spacing={4}>
           <Heading fontSize="md" fontWeight="bold" color="primary.600">
             ROOMS
@@ -35,9 +35,7 @@ export default function Page() {
 
           <Text>Create a room to play with a friend!</Text>
 
-          <Button shadow="md" rounded="full" size="lg" colorScheme="primary" mt={-2}>
-            Create room
-          </Button>
+          <CreateRoom />
 
           <Divider />
 
@@ -45,19 +43,7 @@ export default function Page() {
             JOIN ROOM
           </Heading>
 
-          <Input
-            rounded="full"
-            maxW={240}
-            display="block"
-            mx="auto"
-            textAlign="center"
-            placeholder="Room code"
-            value=""
-          />
-
-          <Button shadow="md" rounded="full" colorScheme="primary" variant="outline" mt={-2}>
-            Join
-          </Button>
+          <JoinRoom />
         </VStack>
       </Flex>
 

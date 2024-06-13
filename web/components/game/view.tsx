@@ -1,18 +1,18 @@
 import { Box, Button, Collapse, Flex, Text } from '@chakra-ui/react'
-import { useSocket } from '@josejefferson/socket.io-react-hook'
+import { useEffect } from 'react'
 import { useImmer } from 'use-immer'
 import { SocketEventGameInit, SocketEventPlace, SocketEventStarted } from '../../types/socket'
 import { Game } from '../../utils/game'
 import { useSocketEvent } from '../../utils/socket'
 import { Board } from './board'
-import { useEffect } from 'react'
+import { useGameSocket } from './socket'
 
 interface GameProps {
   data: SocketEventStarted[0]
 }
 
 export function GameView({ data }: GameProps) {
-  const { socket } = useSocket()
+  const { socket } = useGameSocket()
   const [game, setGame] = useImmer<Game>(Object.assign(new Game(), data.game))
   useEffect(() => setGame(Object.assign(new Game(), data.game)), [data, setGame])
 
