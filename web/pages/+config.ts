@@ -4,5 +4,5 @@ import type { Config } from 'vike/types'
 export default {
   extends: vikeReact,
   filesystemRoutingRoot: '/',
-  passToClient: ['routeParams', 'host', 'user']
+  passToClient: ['routeParams']
 } satisfies Config

@@ -9,3 +9,30 @@ body {
   max-width: 100vw;
   overflow-x: hidden;
 }
+
+.win-pattern {
+  animation: win 1s infinite;
+}
+
+@keyframes win {
+  from,
+  to {
+    background-color: white;
+  }
+  50% {
+    background-color: var(--chakra-colors-blue-100);
+  }
+}
+
+.animate-orbit {
+  animation: orbit 2s ease-in-out infinite;
+}
+
+@keyframes orbit {
+  from {
+    transform: rotate(0deg) translateX(8px) rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg) translateX(8px) rotate(-360deg);
+  }
+}

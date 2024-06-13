@@ -9,8 +9,8 @@ export const theme = extendTheme({
     heading: '"Rubik Variable", Roboto, Arial, sans-serif'
   },
   colors: {
-    primary: baseTheme.colors.red,
-    secondary: baseTheme.colors.blue
+    primary: baseTheme.colors.blue,
+    secondary: baseTheme.colors.red
   },
   components: {
     Heading: {

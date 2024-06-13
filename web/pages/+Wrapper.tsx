@@ -17,7 +17,6 @@ import { PageErrorDev } from '../components/common/page-error-dev'
 import { PageErrorProd } from '../components/common/page-error-prod'
 import { swrOptions } from '../config/swr'
 import { theme } from '../config/theme'
-import { AuthProvider } from '../contexts/auth.context'
 
 export function Wrapper({ children }: PropsWithChildren) {
   const isDev = import.meta.env.MODE === 'development'
@@ -29,10 +28,8 @@ export function Wrapper({ children }: PropsWithChildren) {
         <ChakraProvider theme={theme}>
           <ErrorBoundary FallbackComponent={PageError}>
             <SWRConfig value={swrOptions}>
-              <AuthProvider>
-                <ForceTheme />
-                {children}
-              </AuthProvider>
+              <ForceTheme />
+              {children}
             </SWRConfig>
           </ErrorBoundary>
         </ChakraProvider>

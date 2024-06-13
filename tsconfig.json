@@ -16,7 +16,8 @@
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "rootDir": "."
   },
   "exclude": ["dist", "web", "vite.config.ts"]
 }
