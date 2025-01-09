@@ -6,7 +6,6 @@ declare global {
     interface PageContext {
       headers: IncomingHttpHeaders
       cookies: Record<string, string>
-      user: IAuthenticatedUser | null
     }
   }
 }
